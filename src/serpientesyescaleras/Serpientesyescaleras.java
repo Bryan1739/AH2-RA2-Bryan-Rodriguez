@@ -38,50 +38,15 @@ public class Serpientesyescaleras {
             inicio = kbmenu.nextInt();
             if (inicio == 1) {
                 tablero(tablerito);
+                menu2 (posicionjugador, kbmenu, hasGanado, tablerito);
             } else if (inicio == 2) {
                 for (int i = 7; i > -1; i--) {
                     System.out.println("-------------------------------------------------");
                     imprimir(i % 2 == 0, i, tablerito);
                 }
                 System.out.println("-------------------------------------------------");
-            }
-            String evilinicio = "";
-            kbmenu.nextLine();
-            while (!hasGanado && !evilinicio.equals("P")) {
-                System.out.println("======MENU JUEGO======");
-                System.out.println("1. Tirar Dado");
-                System.out.println("P. Menu principal");
-                evilinicio = kbmenu.nextLine();
-                if (evilinicio.equals("1") ) {
-                    Random rand = new Random();
-                    int dadito = rand.nextInt(6) + 1;
-                    int dadoj = posicionjugador % 8;
-                    int dadoi = (posicionjugador - dadoj) / 8;
-                    posicionjugador += dadito;
-                    System.out.println("Has sacado " + (dadito));
-                    if (posicionjugador > 63) {
-                        System.out.println("Has ganado");
-                        hasGanado = true;
-                    } else {
-                        int newdadoj = posicionjugador % 8;
-                        int newdadoi = (posicionjugador - newdadoj) / 8;
-                        tablerito[dadoi][dadoj] -= 2;
-                        tablerito[newdadoi][newdadoj] += 2;
-
-                        for (int i = 7; i > -1; i--) {
-                            System.out.println("-------------------------------------------------");
-                            imprimir(i % 2 == 0, i, tablerito);
-                        }
-
-                        System.out.println("-------------------------------------------------");
-                        if (tablerito[newdadoi][newdadoj] == 3) {
-                            System.out.println("Has recibido una penalización");
-                        }
-                    }
-
-                }
-
-            }
+                menu2 (posicionjugador, kbmenu, hasGanado, tablerito);
+            }      
         }
 
     }
@@ -158,12 +123,50 @@ public class Serpientesyescaleras {
                 System.out.print("|    #");
                 break;
             case 2:
-                System.out.print("|😎    ");
+                System.out.print("|@    ");
                 break;
             case 3:
-                System.out.print("|😎   #");
+                System.out.print("|@   #");
                 break;
         }
     }
+    public static void menu2 (int posicionjugador, Scanner kbmenu, boolean hasGanado, int tablerito[][]){
+        String evilinicio = "";
+            kbmenu.nextLine();
+            while (!hasGanado && !evilinicio.equals("P")) {
+                System.out.println("======MENU JUEGO======");
+                System.out.println("1. Tirar Dado");
+                System.out.println("P. Menu principal");
+                evilinicio = kbmenu.nextLine();
+                if (evilinicio.equals("1") ) {
+                    Random rand = new Random();
+                    int dadito = rand.nextInt(6) + 1;
+                    int dadoj = posicionjugador % 8;
+                    int dadoi = (posicionjugador - dadoj) / 8;
+                    posicionjugador += dadito;
+                    System.out.println("Has sacado " + (dadito));
+                    if (posicionjugador > 63) {
+                        System.out.println("Has ganado");
+                        hasGanado = true;
+                    } else {
+                        int newdadoj = posicionjugador % 8;
+                        int newdadoi = (posicionjugador - newdadoj) / 8;
+                        tablerito[dadoi][dadoj] -= 2;
+                        tablerito[newdadoi][newdadoj] += 2;
 
-}
+                        for (int i = 7; i > -1; i--) {
+                            System.out.println("-------------------------------------------------");
+                            imprimir(i % 2 == 0, i, tablerito);
+                        }
+
+                        System.out.println("-------------------------------------------------");
+                        if (tablerito[newdadoi][newdadoj] == 3) {
+                            System.out.println("Has recibido una penalización");
+                        }
+                    }
+
+                }
+
+            }
+    }
+} 
